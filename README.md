@@ -5,12 +5,13 @@ The purpose of this collection of scripts is to add height information to tree p
 The workflow can also be called from the shell:
 
 .\workflow.bat $(anaconda_loc) $(polygon_file_location) $(identifier_column_name) $(layer)
-  OPTIONAL buffer_size(4)
+  OPTIONAL $(buffer_size)
   
                 # anaconda3_location=C:\Users\Derek\Anaconda3 , location to check for conda environment
                 # polygon_file_location=data/polygon_input/shapefile.sh, shapefile location
                 # identifier_column_name=KRcode, object id column name
                 # layer=pGroen, laag in geodatabase naam = pGroen
+                # buffer_size, buffers om boom punten om hoogste punt te pakken = 4
                 
                 
  This directory contains 4 scripts:
