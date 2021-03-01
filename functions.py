@@ -60,7 +60,7 @@ def buffer_points(tree_points,buffersize_m=3):
     tree_points['geometry'] = tree_points.geometry.buffer(buffersize_m)
     return(tree_points)
 
-def add_CHM_heights_to_points(CHM_list, identifier_column_name = "KRCode", tree_points):
+def add_CHM_heights_to_points(CHM_list, identifier_column_name, tree_points):
     
     all_point_dataframe_list = []
     
