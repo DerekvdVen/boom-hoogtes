@@ -15,17 +15,18 @@ import zipfile
 
 def get_directory_data_names(directory):
     load_list = []
-    try:
     
-        for tif in sorted(os.listdir(directory)):
-            #print(tif)
-            if str(tif).endswith("ZIP"):
-                pass
-            elif str(tif).endswith("tif"):
-                load_list.append(tif)
-
-    except:
-        print('The tif directory seems to be empty, make sure to put DSMs in directory')
+    for tif in sorted(os.listdir(directory)):
+        #print(tif)
+        
+        if str(tif).upper().endswith("ZIP"):
+            pass
+        
+        elif str(tif).lower().endswith("tif"):
+            load_list.append(tif)
+        
+        if not load_list:
+            print('The tif directory seems to be empty, make sure to put DSMs in directory')
     return(load_list)
 
 def DSM_DTM_list_to_CHM(DTM_list,DSM_list):
@@ -59,7 +60,7 @@ def buffer_points(tree_points,buffersize_m=3):
     tree_points['geometry'] = tree_points.geometry.buffer(buffersize_m)
     return(tree_points)
 
-def add_CHM_heights_to_points(CHM_list, tree_points):
+def add_CHM_heights_to_points(CHM_list, identifier_column_name = "KRCode", tree_points):
     
     all_point_dataframe_list = []
     
@@ -89,7 +90,7 @@ def add_CHM_heights_to_points(CHM_list, tree_points):
         tree_points_stats = tree_points_stats[tree_points_stats.Boomhoogte_ahn.notnull()]
         
         
-        tree_points_stats.drop(tree_points_stats.columns.difference(['KRCode','Boomhoogte_ahn']), 1, inplace=True)
+        tree_points_stats.drop(tree_points_stats.columns.difference([identifier_column_name,'Boomhoogte_ahn']), 1, inplace=True)
         
         all_point_dataframe_list.append(tree_points_stats)
     

@@ -1,3 +1,7 @@
+
+import sys
+print("The arguments are: " , str(sys.argv))
+
 import os
 import rasterio
 from rasterio.plot import show
@@ -11,9 +15,7 @@ from rasterio.fill import fillnodata
 import fiona
 from osgeo import ogr
 
-
-import zipfile
-
+# import functions
 from functions import get_directory_data_names, DSM_DTM_list_to_CHM, buffer_points, add_CHM_heights_to_points, classify_heights_in_dataframe
 
 if not os.path.exists('data'): os.makedirs('data')
@@ -26,9 +28,13 @@ if not os.path.exists('output'): os.makedirs('output')
 
 tree_point_location = "data/geodatabase/OMS_NHM_20201223.gdb"
 gdb_layer = "pGroen"
-# layerlist = fiona.listlayers(tree_point_location)
-# print(layerlist)
+tree_point_location = sys.argv[1]
+identifier_column_name = sys.argv[2]
+gdb_layer=sys.argv[3]
+buffer_size = sys.argv[4]
+
 tree_points = gpd.read_file(tree_point_location,layer=gdb_layer)
+
 
 # get list of DTM and DSM names in directory
 DTM_list = get_directory_data_names("data/DTMs")
@@ -36,7 +42,7 @@ print(DTM_list)
 DSM_list = get_directory_data_names("data/DSMs")
 print(DSM_list)
 
-print(tree_points)
+
 # get list of DTM and DSM names in directory
 DTM_list = get_directory_data_names("data/DTMs")
 DSM_list = get_directory_data_names("data/DSMs")
@@ -55,7 +61,7 @@ CHM_list = get_directory_data_names("data/CHMs")
 
 
 # combine CHM heights with tree_point_buffer to gain height stats
-tree_point_stats = add_CHM_heights_to_points(CHM_list=CHM_list, tree_points=tree_point_buffers)
+tree_point_stats = add_CHM_heights_to_points(CHM_list=CHM_list,identifier_column_name=identifier_column_name ,  tree_points=tree_point_buffers)
 
 
 # classify
